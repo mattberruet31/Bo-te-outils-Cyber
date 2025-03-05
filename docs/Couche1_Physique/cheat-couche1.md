@@ -1,21 +1,9 @@
-# 1. `docs/Couche1_Physique/README.md`
-
-```markdown
-# Couche 1 (Physique)
-
-Ici, vous trouverez la description des attaques et outils liés à la couche physique du modèle OSI (ex: brouillage RF, interception de signaux radio, etc.).
-
-- [cheat-couche1.md](./cheat-couche1.md) : Présentation détaillée de HackRF (scanning, émission, brouillage...).
-```
-
----
-
-# 2. `docs/Couche1_Physique/cheat-couche1.md`
-
-```markdown
+# 1. docs/Couche1_Physique/cheat-couche1.md
 # Couche 1 (Physique) – HackRF
+**Version Testée : HackRF One v1.2**  
+**Attaque Principale : Brouillage électromagnétique (EM Flood)**
 
-Ce document décrit l’utilisation de **HackRF**, un émetteur-récepteur SDR (Software Defined Radio) polyvalent, pour réaliser des attaques ou expérimentations sur la couche physique (ex : brouillage RF, sniffing sur certaines fréquences, etc.).
+*Ce document est conçu pour des expérimentations en laboratoire. Des annotations spécifiques ont été ajoutées afin de permettre l’intégration automatique avec le script de génération de rapport.*
 
 ---
 
@@ -25,89 +13,75 @@ Ce document décrit l’utilisation de **HackRF**, un émetteur-récepteur SDR (
 2. [Installation & Pré-requis](#installation--pré-requis)
 3. [Commandes Clés](#commandes-clés)
 4. [Exemples d’Utilisation](#exemples-dutilisation)
-5. [Précautions Légales](#précautions-légales)
-6. [Références & Ressources](#références--ressources)
+5. [Intégration avec le Script](#intégration-avec-le-script)
+6. [Précautions Légales & Disclaimer](#précautions-légales--disclaimer)
+7. [Références & Ressources](#références--ressources)
 
 ---
 
 ## Introduction
 
-- **Attaque Principale** : Brouillage électromagnétique (EM Flood)  
-- **Description** : HackRF permet de générer et d'enregistrer des signaux radio sur une large bande de fréquences (environ 1 MHz à 6 GHz). Cela peut servir à :
-  - Scanner des fréquences (Wi-Fi, Bluetooth, GSM…).
-  - Émettre un signal continu ou modulé pour perturber une communication.
-  - Enregistrer et analyser des signaux pour du *Reverse Engineering* radio.
+HackRF est un émetteur-récepteur SDR permettant de générer, scanner et analyser une large gamme de signaux radio (de 1 MHz à 6 GHz).  
+Ce cheat sheet présente des scénarios d’expérimentation sur la couche physique, tels que le brouillage RF et le sniffing.
 
 ---
 
 ## Installation & Pré-requis
 
-1. **Matériel** : Un HackRF One (ou équivalent).
-2. **Pilotes / Librairies** :  
-   - Sur Linux, installez `hackrf` et `hackrf-tools` (selon votre distribution).
-   - Assurez-vous que `libusb` est installée et à jour.
-3. **Droits d’accès** : Généralement, il faut être en **root** ou avoir configuré les règles `udev` pour accéder au matériel.
+- **Matériel :** HackRF One (ou équivalent).  
+- **Dépendances :**  
+  - Installer `hackrf` et `hackrf-tools`  
+  - Vérifier que `libusb` est à jour.
+- **Accès :** Généralement, l’exécution nécessite les droits **root** ou une configuration des règles `udev`.
 
-Exemple d’installation (Debian/Ubuntu) :
-
+**Exemple d’installation (Debian/Ubuntu) :**
 ```bash
 sudo apt update
 sudo apt install hackrf
-```
-
----
-
-## Commandes Clés
-
-### 1. Scanner les fréquences
-```bash
+________________________________________
+Commandes Clés
+1. Scanner les fréquences
 hackrf_sweep -f 2400:2500 -w 1000000 -l 32 -g 32
-```
-- `-f 2400:2500` : plage de fréquences (MHz) à scanner.  
-- `-w 1000000`   : largeur de bande (1 MHz).  
-- `-l 32` et `-g 32` : réglages de gain (RX).
-
-### 2. Générer un signal de brouillage sur 2.4 GHz (Wi-Fi)
-```bash
+Détails :
+•	-f 2400:2500 : plage de fréquences en MHz.
+•	-w 1000000 : largeur de bande (1 MHz).
+•	-l 32 et -g 32 : réglages de gain RX.
+2. Générer un signal de brouillage sur 2.4 GHz (Wi-Fi)
 hackrf_transfer -t noise.bin -f 2400000000 -s 20000000 -x 47
-```
-- `-t noise.bin` : fichier binaire contenant du « bruit » ou une porteuse.  
-- `-f 2400000000` : fréquence cible (2.4 GHz).  
-- `-s 20000000`   : taux d’échantillonnage (20 MHz).  
-- `-x 47`         : gain TX maximal (47 dB).
-
-### 3. Enregistrer un signal
-```bash
+Détails :
+•	-t noise.bin : fichier binaire générant un signal bruité.
+•	-f 2400000000 : fréquence cible (2.4 GHz).
+•	-s 20000000 : taux d’échantillonnage (20 MHz).
+•	-x 47 : gain TX maximal.
+3. Enregistrer un signal
 hackrf_transfer -r capture.raw -f 2400000000 -s 20000000 -l 32 -g 32
-```
-- `-r capture.raw` : fichier où sera enregistré le flux IQ.  
-- `-l 32` et `-g 32` : gains (RX).
+Détails :
+•	-r capture.raw : nom du fichier de sauvegarde.
+•	-l 32 et -g 32 : gains RX.
+________________________________________
+Exemples d’Utilisation
+•	Wi-Fi Jamming : 
+1.	Générer ou récupérer un fichier noise.bin (signal bruit blanc).
+2.	Émettre sur la fréquence 2.4 GHz pour saturer le canal.
+•	Bluetooth Sniffing : 
+o	Identifier les canaux avec hackrf_sweep puis enregistrer une capture avec hackrf_transfer.
+________________________________________
+Intégration avec le Script
+•	Annotations :
+Chaque commande est clairement identifiée et commentée pour que le script puisse : 
+o	Extraire la commande et ses paramètres.
+o	Enregistrer l’exécution et les options choisies.
+•	Rapport automatisé :
+Le script analysera les logs pour générer un rapport détaillé (ex. : "attaque EM Flood sur 2.4 GHz").
+________________________________________
+Précautions Légales & Disclaimer
+Attention : L’utilisation de HackRF pour générer ou intercepter des signaux radio est strictement réglementée.
+Réalisez ces expérimentations uniquement dans un environnement de test contrôlé (laboratoire ou cage de Faraday) et avec les autorisations nécessaires.
+Disclaimer : Ce document est fourni à des fins éducatives uniquement. Toute utilisation malveillante est interdite.
+________________________________________
+Références & Ressources
+•	HackRF Officiel GitHub
+•	Documentation HackRF
+•	GNU Radio
 
 ---
-
-## Exemples d’Utilisation
-
-- **Wi-Fi Jamming (2.4 GHz)** :  
-  1) Créer un fichier `noise.bin` (un signal ou bruit blanc) via des scripts ou en extrayant du bruit d’une capture antérieure.  
-  2) Émettre sur 2.4 GHz avec un gain élevé pour saturer le canal choisi.
-
-- **Bluetooth Sniffing** :  
-  - Utiliser `hackrf_sweep` pour localiser les canaux Bluetooth, puis enregistrer à la fréquence correspondante pour analyse hors-ligne.
-
-> **Attention :** Le brouillage radio est strictement encadré par la loi. Seules des expérimentations en laboratoire, dans une cage de Faraday ou sous autorisation explicite, sont permises.
-
----
-
-## Précautions Légales
-
-- Vérifiez la réglementation de votre pays. Émettre sur des bandes licenciées (GSM, LTE, TV, etc.) ou brouiller des services (Wi-Fi, Bluetooth) est **généralement illégal** sans autorisation.
-- Toujours réaliser ces tests dans un environnement **isolé** ou sur une plage de fréquences attribuée à la recherche.
-
----
-
-## Références & Ressources
-
-- **Projet Officiel HackRF** : [https://github.com/mossmann/hackrf](https://github.com/mossmann/hackrf)  
-- **Documentation HackRF** : [https://hackrf.readthedocs.io/en/latest/](https://hackrf.readthedocs.io/en/latest/)  
-- **GNU Radio** : [https://www.gnuradio.org/](https://www.gnuradio.org/)  
-- **Laws & Regulations** : Consultez l’ANFR (France) ou l’organisme équivalent dans votre pays.

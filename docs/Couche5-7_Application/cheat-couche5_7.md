@@ -1,9 +1,11 @@
-# 10. `docs/Couche5_7_Application/cheat-couche5-7.md`
+## 5. `docs/Couche5_7_Application/cheat-couche5-7.md`
 
 ```markdown
 # Couche 5-7 (Application) – Sqlmap
+**Version Testée : Sqlmap 1.6.x**  
+**Attaque Ciblée : Injection SQL**
 
-**Attaque ciblée** : Injection SQL
+*Ce document est structuré pour une intégration avec le script automatisé qui génère un rapport complet des commandes exécutées via Sqlmap.*
 
 ---
 
@@ -14,76 +16,64 @@
 3. [Commandes Clés](#commandes-clés)
 4. [Fonctionnalités Avancées](#fonctionnalités-avancées)
 5. [Contre-mesures](#contre-mesures)
-6. [Références & Ressources](#références--ressources)
+6. [Intégration avec le Script](#intégration-avec-le-script)
+7. [Références & Ressources](#références--ressources)
 
 ---
 
 ## Introduction
 
-**Sqlmap** est un outil d’automatisation pour détecter et exploiter des vulnérabilités SQL. Il prend en charge :
-- Divers SGBD (MySQL, PostgreSQL, MSSQL, Oracle…).  
-- Des mécanismes de contournement de WAF.  
-- L’exfiltration de données, la prise de contrôle système, etc.
+Sqlmap est un outil d’automatisation pour la détection et l’exploitation de vulnérabilités SQL. Il supporte plusieurs SGBD et propose des techniques avancées pour contourner les protections (WAF, etc.).
 
 ---
 
 ## Installation & Pré-requis
 
-1. **Python** : Sqlmap est un script Python.
-2. **Cloner le repo** :
-   ```bash
-   git clone https://github.com/sqlmapproject/sqlmap.git
-   cd sqlmap
-   ```
-   Puis exécuter `python sqlmap.py` ou utiliser le binaire `sqlmap` si installé via un package manager.
-
----
-
-## Commandes Clés
-
-### 1) Détection d’une injection SQL
+1. **Python requis.**  
+2. **Cloner le dépôt :**
 ```bash
+git clone https://github.com/sqlmapproject/sqlmap.git
+cd sqlmap
+3.	Exécution :
+Utilisez python sqlmap.py ou le binaire sqlmap selon votre installation.
+________________________________________
+Commandes Clés
+1. Détection d’une injection SQL
 sqlmap -u "http://site.com/page?id=1" --batch
-```
-- `--batch` : exécute automatiquement les choix par défaut.
-
-### 2) Extraire les bases de données
-```bash
+Détail :
+--batch permet d’automatiser les réponses par défaut.
+2. Extraire les bases de données
 sqlmap -u "http://site.com/page?id=1" --dbs
-```
-
-### 3) Extraire une table spécifique
-```bash
+3. Extraire une table spécifique
 sqlmap -u "http://site.com/page?id=1" -D nom_de_base -T nom_de_table --dump
-```
-
-### 4) Bypass WAF (exemple)
-```bash
+4. Bypass WAF
 sqlmap -u "http://site.com/page?id=1" --tamper=space2comment
-```
+Détail :
+Utilisation d’un script de modification pour contourner un WAF.
+________________________________________
+Fonctionnalités Avancées
+•	--os-shell : Ouvre un shell système (si supporté par la base).
+•	--sql-shell : Accès interactif à la base de données.
+•	--dump-all : Extraction complète de la base.
+•	--technique= : Spécifier les techniques d’injection à tester (UNION, BOOLEAN, etc.).
+________________________________________
+Contre-mesures
+•	Développement sécurisé : 
+o	Valider et filtrer les entrées utilisateur.
+o	Utiliser des requêtes préparées (ex. PDO).
+•	Défense en profondeur : 
+o	Déployer un WAF.
+o	Appliquer le principe du moindre privilège sur les comptes de base.
+________________________________________
+Intégration avec le Script
+•	Annotations :
+Le script enregistrera l’exécution de chaque commande Sqlmap ainsi que les résultats pour générer un rapport final détaillé.
+•	Log des actions :
+Chaque interaction (commande, option, résultat) sera capturée pour une analyse post-exécution.
+________________________________________
+Références & Ressources
+•	Site Officiel SQLmap
+•	GitHub SQLmap
+•	OWASP Injection
 
 ---
-
-## Fonctionnalités Avancées
-
-- `--os-shell` : Ouvre un shell système si la base le permet (XP_CMDSHELL sur MSSQL, etc.).  
-- `--sql-shell` : Ouvre un shell SQL interactif.  
-- `--dump-all` : Tente de dumper l’intégralité de la base de données.  
-- `--technique=` : Spécifie quelles techniques d’injection tester (UNION, BOOLEAN, etc.).
-
----
-
-## Contre-mesures
-
-- **Validation des entrées** (paramètres GET/POST, etc.).  
-- **Utilisation de requêtes préparées** (PDO, etc.) pour éviter l’interprétation directe.  
-- **WAF** : Filtrage des patterns courants d’injection.  
-- **Moindre privilège** : Les comptes DB ne devraient pas avoir plus de droits que nécessaire.
-
----
-
-## Références & Ressources
-
-- [Site Officiel SQLmap](https://sqlmap.org/)  
-- [GitHub SQLmap](https://github.com/sqlmapproject/sqlmap)  
-- [OWASP Top 10 (Injection)](https://owasp.org/www-project-top-ten/)

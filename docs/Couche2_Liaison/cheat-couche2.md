@@ -1,9 +1,11 @@
-# 4. `docs/Couche2_Liaison/cheat-couche2.md`
+## 2. `docs/Couche2_Liaison/cheat-couche2.md`
 
 ```markdown
 # Couche 2 (Liaison) – Ettercap
+**Version Testée : Ettercap 0.8.x**  
+**Attaque Ciblée : ARP Spoofing / MITM**
 
-**Attaque ciblée** : ARP Spoofing
+*Ce document détaille l’utilisation d’Ettercap pour mener des attaques de type ARP spoofing. Les annotations facilitent l’intégration avec le script automatisé pour la génération de rapports d’activité.*
 
 ---
 
@@ -14,73 +16,65 @@
 3. [Commandes Clés](#commandes-clés)
 4. [Scénarios Communs](#scénarios-communs)
 5. [Contre-mesures](#contre-mesures)
-6. [Références & Ressources](#références--ressources)
+6. [Intégration avec le Script](#intégration-avec-le-script)
+7. [Références & Ressources](#références--ressources)
 
 ---
 
 ## Introduction
 
-**Ettercap** est un outil permettant :
-- Le *sniffing* sur un réseau local (ARP poisoning).
-- L’interception et la modification de paquets en transit (MITM).
-- Le filtrage / injection de scripts dans le trafic HTTP.
+Ettercap est un outil d'interception (MITM) qui permet :
+- Le sniffing et l’interception via ARP poisoning.
+- La modification de paquets en transit.
+- L’injection de scripts dans le trafic HTTP.
 
 ---
 
 ## Installation & Pré-requis
 
-- **Linux** :  
-  ```bash
-  sudo apt update
-  sudo apt install ettercap-graphical  # ou ettercap-text-only
-  ```
-- **Droits administrateur** : Souvent nécessaire pour configurer l’interface en mode promiscue.
-
----
-
-## Commandes Clés
-
-### 1) Lancer Ettercap en mode texte
+- **Installation sur Linux :**
 ```bash
+sudo apt update
+sudo apt install ettercap-graphical  # ou ettercap-text-only selon vos besoins
+•	Configuration :
+Une interface en mode promiscuité et les droits administrateur sont requis.
+________________________________________
+Commandes Clés
+1. Lancer Ettercap en mode texte
 ettercap -T
-```
-- `-T` : mode texte (Text mode).
-
-### 2) ARP Spoofing ciblé
-```bash
+Option : -T active le mode texte.
+2. ARP Spoofing ciblé
 ettercap -T -M arp:remote /192.168.1.1// /192.168.1.2//
-```
-- `-M arp:remote` : active l’ARP poisoning.
-- Les deux IP sont la passerelle et la victime.
-
-### 3) Sniffer et logger
-```bash
+Détails :
+•	-M arp:remote active l’ARP poisoning.
+•	Les adresses IP indiquées correspondent à la passerelle et à la victime.
+3. Sniffer et logger
 ettercap -T -M arp -i eth0 -L logfile
-```
-- `-L logfile` : enregistre dans un fichier log.
+Détails :
+-L logfile permet d’enregistrer le log pour analyse postérieure.
+________________________________________
+Scénarios Communs
+•	MITM sur un LAN :
+Se positionner entre la passerelle et une victime pour intercepter et modifier les échanges.
+•	Injection de scripts :
+Modifier en temps réel les pages HTTP non chiffrées pour injecter du code.
+________________________________________
+Contre-mesures
+•	Détection ARP Spoofing : Utilisation d’IDS/IPS ou d’outils dédiés.
+•	Configuration des switches : Mise en place de port security.
+•	Utilisation de protocoles chiffrés : HTTPS, SSH, etc.
+________________________________________
+Intégration avec le Script
+•	Annotations :
+Chaque commande est structurée pour que le script puisse : 
+o	Identifier l’outil et la commande.
+o	Enregistrer les paramètres utilisés pour le rapport final.
+•	Log des actions :
+Les interactions de l’utilisateur seront capturées pour un suivi détaillé.
+________________________________________
+Références & Ressources
+•	Site Officiel Ettercap
+•	GitHub Ettercap
+•	ARP Spoofing – Wikipedia
 
 ---
-
-## Scénarios Communs
-
-- **MITM sur un LAN** : Attaquant se positionne entre la passerelle et une victime, permettant :
-  - Récupération de mots de passe en clair (HTTP, FTP…).
-  - Déchiffrement potentiel de sessions mal protégées (SSLstrip, etc.).
-
-- **Filtrage de paquets** : Ettercap peut injecter du code HTML/JS dans les pages non-HTTPS pour espionner ou altérer le contenu.
-
----
-
-## Contre-mesures
-
-- **Activation d’ARP Spoofing Detection** (sur les switches, certains IDS/IPS).  
-- **Utilisation du protocole ARP sécurisé** (rarissime) ou du *port security*.  
-- **Chiffrement** end-to-end (HTTPS, SSH) pour limiter l’impact d’un MITM.
-
----
-
-## Références & Ressources
-
-- [Site officiel Ettercap](https://www.ettercap-project.org/)  
-- [GitHub Ettercap](https://github.com/Ettercap/ettercap)  
-- [ARP Spoofing – Wikipedia](https://fr.wikipedia.org/wiki/ARP_spoofing)
