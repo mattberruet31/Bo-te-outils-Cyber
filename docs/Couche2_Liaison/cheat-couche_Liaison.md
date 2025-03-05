@@ -1,80 +1,161 @@
-## 2. `docs/Couche2_Liaison/cheat-couche2.md`
+**Chemin :**  
+`docs/Couche2_Liaison/cheat-couche_Liaison.md`
 
 ```markdown
-# Couche 2 (Liaison) – Ettercap
-**Version Testée : Ettercap 0.8.x**  
-**Attaque Ciblée : ARP Spoofing / MITM**
+# Couche 2 (Liaison) – Attaques et Outils
 
-*Ce document détaille l’utilisation d’Ettercap pour mener des attaques de type ARP spoofing. Les annotations facilitent l’intégration avec le script automatisé pour la génération de rapports d’activité.*
+**Version Testée :**
+- Ettercap 0.8.x
+- Bettercap 2.x
+- Arpspoof (dsniff)
+- Cain and Abel (Windows)
 
----
+**Description :**  
+Ce document recense les outils et attaques disponibles pour la couche liaison du modèle OSI. La couche 2 gère le contrôle d’accès au média et la transmission des trames sur le réseau local.  
+Des attaques typiques incluent le spoofing ARP, le MITM (Man-In-The-Middle) et la modification ou l’injection de paquets.  
+Le script automatisé analysera ce fichier pour :
+- Lister les outils disponibles (sections marquées par **"### Outil:"**),
+- Afficher, pour chaque outil, les attaques possibles (sections marquées par **"#### Attaque:"**),
+- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"**).
 
-## Sommaire
-
-1. [Introduction](#introduction)
-2. [Installation & Pré-requis](#installation--pré-requis)
-3. [Commandes Clés](#commandes-clés)
-4. [Scénarios Communs](#scénarios-communs)
-5. [Contre-mesures](#contre-mesures)
-6. [Intégration avec le Script](#intégration-avec-le-script)
-7. [Références & Ressources](#références--ressources)
-
----
-
-## Introduction
-
-Ettercap est un outil d'interception (MITM) qui permet :
-- Le sniffing et l’interception via ARP poisoning.
-- La modification de paquets en transit.
-- L’injection de scripts dans le trafic HTTP.
+Vous pourrez enrichir ce fichier ultérieurement sans modifier le script.
 
 ---
 
-## Installation & Pré-requis
+### Outil: Ettercap
+**Description :**  
+Ettercap est un outil puissant pour l'interception de trafic et l'exécution d'attaques MITM par ARP spoofing. Il permet de capturer, modifier et injecter du trafic réseau en temps réel.
 
-- **Installation sur Linux :**
+#### Attaque: ARP Spoofing / MITM
+*Détails de l'attaque :*  
+Positionner l'attaquant entre la victime et la passerelle pour intercepter le trafic réseau.
+##### Commandes Clés
+**Commande: Lancer Ettercap en mode texte**
 ```bash
-sudo apt update
-sudo apt install ettercap-graphical  # ou ettercap-text-only selon vos besoins
-•	Configuration :
-Une interface en mode promiscuité et les droits administrateur sont requis.
-________________________________________
-Commandes Clés
-1. Lancer Ettercap en mode texte
 ettercap -T
-Option : -T active le mode texte.
-2. ARP Spoofing ciblé
+```
+Détails :
+- Utilisation en mode texte pour l'interception.
+  
+**Commande: ARP Spoofing ciblé**
+```bash
 ettercap -T -M arp:remote /192.168.1.1// /192.168.1.2//
+```
 Détails :
-•	-M arp:remote active l’ARP poisoning.
-•	Les adresses IP indiquées correspondent à la passerelle et à la victime.
-3. Sniffer et logger
+- Cibler la passerelle (192.168.1.1) et la victime (192.168.1.2).
+  
+**Commande: Sniffer et logger**
+```bash
 ettercap -T -M arp -i eth0 -L logfile
+```
 Détails :
--L logfile permet d’enregistrer le log pour analyse postérieure.
-________________________________________
-Scénarios Communs
-•	MITM sur un LAN :
-Se positionner entre la passerelle et une victime pour intercepter et modifier les échanges.
-•	Injection de scripts :
-Modifier en temps réel les pages HTTP non chiffrées pour injecter du code.
-________________________________________
-Contre-mesures
-•	Détection ARP Spoofing : Utilisation d’IDS/IPS ou d’outils dédiés.
-•	Configuration des switches : Mise en place de port security.
-•	Utilisation de protocoles chiffrés : HTTPS, SSH, etc.
-________________________________________
-Intégration avec le Script
-•	Annotations :
-Chaque commande est structurée pour que le script puisse : 
-o	Identifier l’outil et la commande.
-o	Enregistrer les paramètres utilisés pour le rapport final.
-•	Log des actions :
-Les interactions de l’utilisateur seront capturées pour un suivi détaillé.
-________________________________________
-Références & Ressources
-•	Site Officiel Ettercap
-•	GitHub Ettercap
-•	ARP Spoofing – Wikipedia
+- Enregistrer le trafic sur l'interface eth0.
+
+#### Attaque: Injection de paquets HTTP
+*Détails de l'attaque :*  
+Modifier en temps réel le trafic HTTP non chiffré pour injecter du code malveillant.
+##### Commandes Clés
+**Commande: Injection de scripts HTTP**
+```bash
+ettercap -T -M arp:remote -i eth0 -F filter.ec
+```
+Détails :
+- Utilise un fichier de filtre (filter.ec) pour modifier le trafic HTTP.
 
 ---
+
+### Outil: Bettercap
+**Description :**  
+Bettercap est un framework moderne de MITM et d'analyse réseau, offrant une interface web et des modules extensibles pour diverses attaques sur le réseau local.
+
+#### Attaque: ARP Spoofing avancé
+*Détails de l'attaque :*  
+Manipuler les tables ARP pour rediriger le trafic d'une victime vers l'attaquant.
+##### Commandes Clés
+**Commande: Lancer Bettercap en mode interactif**
+```bash
+bettercap -I eth0
+```
+Détails :
+- Utilisation de l'interface eth0.
+  
+**Commande: Exécuter un caplet ARP spoofing**
+```bash
+caplets/arp.spoof
+```
+Détails :
+- Utiliser le caplet arp.spoof pour lancer l'attaque.
+  
+#### Attaque: Sniffing de paquets
+*Détails de l'attaque :*  
+Capturer et analyser le trafic réseau pour détecter des vulnérabilités ou informations sensibles.
+##### Commandes Clés
+**Commande: Capture de paquets en temps réel**
+```bash
+bettercap -X -I eth0
+```
+Détails :
+- Option -X pour l'affichage en temps réel des paquets.
+
+---
+
+### Outil: Arpspoof (dsniff)
+**Description :**  
+Arpspoof, issu du paquet dsniff, est un outil simple pour effectuer du spoofing ARP et détourner le trafic dans un LAN.
+
+#### Attaque: Détournement ARP simple
+*Détails de l'attaque :*  
+Rediriger le trafic réseau d'une cible en falsifiant les réponses ARP.
+##### Commandes Clés
+**Commande: Spoofing vers la cible**
+```bash
+arpspoof -i eth0 -t 192.168.1.2 192.168.1.1
+```
+Détails :
+- Cible : 192.168.1.2, passerelle : 192.168.1.1.
+  
+**Commande: Spoofing vers la passerelle**
+```bash
+arpspoof -i eth0 -t 192.168.1.1 192.168.1.2
+```
+Détails :
+- Inverse la cible pour rediriger le trafic dans les deux sens.
+
+---
+
+### Outil: Cain and Abel
+**Description :**  
+Cain and Abel est un outil de récupération de mots de passe pour Windows, qui inclut des fonctionnalités de spoofing ARP et de capture de trafic. (Note : Outil Windows, interface graphique)
+
+#### Attaque: ARP Spoofing et capture d'identifiants
+*Détails de l'attaque :*  
+Utiliser Cain and Abel pour réaliser du spoofing ARP et récupérer des informations sensibles via l'interface graphique.
+##### Commandes Clés
+**Commande: Lancer Cain and Abel**
+```bash
+# Démarrer Cain and Abel via l'interface Windows
+```
+Détails :
+- Utiliser l'interface graphique pour lancer l'attaque.
+  
+**Commande: Configurer l'ARP spoofing pour la capture d'identifiants**
+```bash
+# Configurer Cain and Abel pour l'ARP spoofing et la capture des mots de passe
+```
+Détails :
+- Suivre les instructions à l'écran pour intercepter le trafic.
+
+---
+
+## Précautions Légales & Disclaimer
+**Attention :**  
+L’utilisation de ces outils et commandes doit être réalisée dans un cadre légal et exclusivement en environnement de test. Toute utilisation malveillante est strictement interdite.
+
+---
+
+## Références & Ressources
+- [Ettercap Officiel](https://www.ettercap-project.org/)
+- [Bettercap Documentation](https://www.bettercap.org/)
+- [dsniff et Arpspoof](https://www.monkey.org/~dugsong/dsniff/)
+- [Cain and Abel (Wikipedia)](https://en.wikipedia.org/wiki/Cain_%26_Abel)
+```

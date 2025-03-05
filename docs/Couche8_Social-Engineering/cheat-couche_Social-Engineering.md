@@ -1,89 +1,99 @@
-## 7. `docs/Couche8_SocialEngineering/cheat-couche8.md`
+**Chemin :**  
+`docs/Couche8_Social-Engineering/cheat-couche_Social-Engineering.md`
 
 ```markdown
-# Couche 8 (Social Engineering) – Social-Engineer Toolkit (SET)
-**Version Testée : SET 8.x**  
-**Attaque Ciblée : Phishing / Ingénierie sociale**
+# Couche 8 (Social Engineering) – Attaques et Outils
 
-*Ce document guide l’utilisation du Social-Engineer Toolkit (SET) et est annoté pour permettre l’intégration avec le script automatisé de génération de rapports.*
+**Version Testée :**
+- Social-Engineer Toolkit (SET) 8.x
+- Gophish 0.11.x
+- King Phisher 1.14.x
 
----
+**Description :**  
+Ce document recense les outils et attaques disponibles pour la couche Social Engineering du modèle OSI.  
+Cette couche s'appuie sur la manipulation psychologique et la tromperie pour obtenir des informations sensibles ou compromettre des systèmes.  
+Les outils présentés permettent de lancer des campagnes de phishing, de cloner des sites web, de générer des payloads malveillants ou de simuler des attaques d'ingénierie sociale.  
+Le script automatisé analysera ce fichier pour :
+- Lister les outils disponibles (sections marquées par **"### Outil:"**),
+- Afficher, pour chaque outil, les attaques possibles (sections marquées par **"#### Attaque:"**),
+- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"** avec une section "Détails :").
 
-## Sommaire
-
-1. [Introduction](#introduction)
-2. [Installation & Pré-requis](#installation--pré-requis)
-3. [Menu Principal & Scénarios](#menu-principal--scénarios)
-4. [Exemples Concrets](#exemples-concrets)
-5. [Conseils & Contre-mesures](#conseils--contre-mesures)
-6. [Intégration avec le Script](#intégration-avec-le-script)
-7. [Références & Ressources](#références--ressources)
-8. [Disclaimer Légal](#disclaimer-légal)
-
----
-
-## Introduction
-
-Le Social-Engineer Toolkit (SET) est un outil en Python dédié aux attaques d’ingénierie sociale. Il permet notamment :
-- Le clonage de sites pour des attaques de phishing.
-- L’envoi d’e-mails de phishing personnalisés.
-- La génération de payloads malveillants.
+Vous pourrez enrichir ce fichier ultérieurement sans modifier le script.
 
 ---
 
-## Installation & Pré-requis
+### Outil: Social-Engineer Toolkit (SET)
+**Description :**  
+SET est un framework complet pour réaliser des attaques d'ingénierie sociale, telles que le phishing, le spear-phishing, la création de sites clones, et la génération de payloads.
 
-1. **Python 3.x requis.**  
-2. **Cloner le dépôt SET :**
+#### Attaque: Phishing / Credential Harvester
+*Détails de l'attaque :*  
+Cloner un site web afin de capturer les identifiants des utilisateurs lorsqu'ils se connectent.
+##### Commandes Clés
+**Commande: Lancer SET pour Credential Harvester**
 ```bash
-git clone https://github.com/trustedsec/social-engineer-toolkit.git
-cd social-engineer-toolkit
-sudo python setup.py install
-3.	Dépendances :
-SET installe automatiquement les librairies nécessaires.
-________________________________________
-Menu Principal & Scénarios
-Lancez SET avec la commande :
 setoolkit
-Vous accéderez à un menu interactif proposant plusieurs options, telles que :
-•	Social Engineering Attacks
-•	Penetration Testing (Fast-Track)
-•	Third Party Modules
-Exemple de scénario
-•	Credential Harvester : 
-1.	Choisir Social Engineering Attacks > Website Attack Vectors > Credential Harvester.
-2.	Saisir l’URL à cloner (ex : https://www.facebook.com).
-3.	SET lance un serveur local pour héberger le site cloné et capturer les identifiants.
-________________________________________
-Exemples Concrets
-1. Créer un site clone (phishing)
-•	Utiliser l’option Credential Harvester pour cloner et capturer les identifiants envoyés par les victimes.
-2. Générer un payload malveillant
-•	Sélectionner Create a Payload and Listener et configurer le type de payload (ex : Meterpreter).
-3. Envoyer un e-mail de phishing
-•	Choisir Mass Mailer Attack et configurer les paramètres (expéditeur, destinataire, contenu HTML).
-________________________________________
-Conseils & Contre-mesures
-•	Pour l’attaquant : 
-o	Personnaliser les messages pour augmenter l’efficacité.
-•	Pour le défenseur : 
-o	Mettre en place des filtres anti-spam.
-o	Sensibiliser les utilisateurs aux risques du phishing.
-o	Utiliser l’authentification multifactorielle.
-________________________________________
-Intégration avec le Script
-•	Annotations :
-Le script enregistrera chaque action réalisée via SET (option sélectionnée, commande exécutée) afin de générer un rapport d’activité complet.
-•	Suivi :
-Les interactions du menu et les commandes utilisées seront loguées pour une analyse post-exécution.
-________________________________________
-Références & Ressources
-•	GitHub Officiel de SET
-•	TrustedSec Blog
-•	OWASP – Phishing
-________________________________________
-Disclaimer Légal
-Attention : L’utilisation de SET est strictement réservée aux environnements de test ou aux opérations réalisées avec l’accord explicite des parties concernées.
-Ce document est fourni à titre éducatif uniquement et ne doit en aucun cas être utilisé à des fins malveillantes.
+```
+Détails :
+- Dans SET, sélectionnez "Social Engineering Attacks" → "Website Attack Vectors" → "Credential Harvester Attack".
+- Suivez les instructions pour cloner un site et récupérer les identifiants.
+
+#### Attaque: Envoi de mass mail de phishing
+*Détails de l'attaque :*  
+Utiliser SET pour envoyer des e-mails de phishing en masse afin de tromper les destinataires et collecter leurs informations.
+##### Commandes Clés
+**Commande: Lancer SET pour Mass Mailer Attack**
+```bash
+setoolkit --mass-mailer
+```
+Détails :
+- Configurez les paramètres d'envoi, y compris l'expéditeur, le contenu et la liste de destinataires.
 
 ---
+
+### Outil: Gophish
+**Description :**  
+Gophish est une plateforme open source de phishing qui permet de créer et de gérer des campagnes de phishing de manière centralisée.
+
+#### Attaque: Campagne de phishing
+*Détails de l'attaque :*  
+Créer et lancer une campagne de phishing ciblée pour récolter des informations sensibles.
+##### Commandes Clés
+**Commande: Lancer Gophish (serveur intégré)**
+```bash
+./gophish
+```
+Détails :
+- Lancez l'interface web de Gophish, configurez votre campagne, et surveillez les résultats.
+
+---
+
+### Outil: King Phisher
+**Description :**  
+King Phisher est un outil de simulation de phishing qui permet de tester la sensibilisation aux attaques de phishing au sein d'une organisation.
+
+#### Attaque: Simulation de phishing avancée
+*Détails de l'attaque :*  
+Simuler une attaque de phishing pour évaluer la vulnérabilité des utilisateurs et améliorer la formation.
+##### Commandes Clés
+**Commande: Lancer King Phisher Client**
+```bash
+king-phisher
+```
+Détails :
+- Utilisez l'interface graphique pour configurer et lancer une campagne de phishing simulée.
+
+---
+
+## Précautions Légales & Disclaimer
+**Attention :**  
+L'utilisation de ces outils et techniques d'ingénierie sociale doit être réalisée dans un cadre légal et uniquement à des fins de tests autorisés. Toute utilisation malveillante est strictement interdite.
+
+---
+
+## Références & Ressources
+- [Social-Engineer Toolkit GitHub](https://github.com/trustedsec/social-engineer-toolkit)
+- [Gophish Project](https://getgophish.com/)
+- [King Phisher GitHub](https://github.com/securestate/king-phisher)
+- [OWASP Phishing](https://owasp.org/www-community/attacks/Phishing)
+```
