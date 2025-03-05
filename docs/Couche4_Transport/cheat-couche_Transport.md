@@ -1,7 +1,3 @@
-**Chemin :**  
-`docs/Couche4_Transport/cheat-couche_Transport.md`
-
-```markdown
 # Couche 4 (Transport) – Attaques et Outils
 
 **Version Testée :**
@@ -16,7 +12,7 @@ Les outils présentés permettent de mener des attaques de force brute sur diver
 Le script automatisé analysera ce fichier pour :
 - Lister les outils disponibles (sections marquées par **"### Outil:"**),
 - Afficher, pour chaque outil, les attaques possibles (sections marquées par **"#### Attaque:"**),
-- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"** avec une section "Détails :").
+- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"**).
 
 Vous pourrez enrichir ce fichier ultérieurement sans modifier le script.
 
@@ -29,8 +25,8 @@ Hydra est un outil de force brute réseau rapide, supportant de nombreux protoco
 #### Attaque: Bruteforce SSH
 *Détails de l'attaque :*  
 Utiliser Hydra pour tester une combinaison de login/mot de passe sur un service SSH.
-##### Commandes Clés
-**Commande: Bruteforce SSH**
+
+###### Commande: Bruteforce SSH
 ```bash
 hydra -l admin -P passlist.txt ssh://192.168.1.1
 ```
@@ -42,8 +38,8 @@ Détails :
 #### Attaque: Bruteforce FTP
 *Détails de l'attaque :*  
 Tester plusieurs combinaisons sur le service FTP pour obtenir un accès non autorisé.
-##### Commandes Clés
-**Commande: Bruteforce FTP**
+
+###### Commande: Bruteforce FTP
 ```bash
 hydra -L users.txt -P ftp_pass.txt ftp://192.168.1.1
 ```
@@ -55,8 +51,8 @@ Détails :
 #### Attaque: Bruteforce HTTP POST
 *Détails de l'attaque :*  
 Tester des formulaires de connexion HTTP pour trouver les identifiants valides.
-##### Commandes Clés
-**Commande: Bruteforce HTTP POST**
+
+###### Commande: Bruteforce HTTP POST
 ```bash
 hydra -l user -P rockyou.txt 192.168.1.1 http-post-form "/login.php:user=^USER^&pass=^PASS^:F=incorrect"
 ```
@@ -73,8 +69,8 @@ Medusa est un brute-forcer parallèle pour les connexions réseau, permettant de
 #### Attaque: Bruteforce Telnet
 *Détails de l'attaque :*  
 Utiliser Medusa pour forcer l’accès à un service Telnet via une attaque par dictionnaire.
-##### Commandes Clés
-**Commande: Bruteforce Telnet**
+
+###### Commande: Bruteforce Telnet
 ```bash
 medusa -h 192.168.1.1 -u admin -P telnet_pass.txt -M telnet
 ```
@@ -92,8 +88,8 @@ Ncrack est un outil de crack d'authentification réseau à grande vitesse, idéa
 #### Attaque: Bruteforce RDP
 *Détails de l'attaque :*  
 Utiliser Ncrack pour tester les identifiants sur un service Remote Desktop Protocol.
-##### Commandes Clés
-**Commande: Bruteforce RDP**
+
+###### Commande: Bruteforce RDP
 ```bash
 ncrack -p 3389 192.168.1.1
 ```
@@ -104,8 +100,8 @@ Détails :
 #### Attaque: Bruteforce SSH (alternative)
 *Détails de l'attaque :*  
 Tester les identifiants SSH en alternative à Hydra.
-##### Commandes Clés
-**Commande: Bruteforce SSH avec Ncrack**
+
+###### Commande: Bruteforce SSH avec Ncrack
 ```bash
 ncrack -p 22 192.168.1.1
 ```

@@ -1,7 +1,3 @@
-**Chemin :**  
-`docs/Couche5-7_TApplication/cheat-couche_Application.md`
-
-```markdown
 # Couche 5-7 (Application) – Attaques et Outils
 
 **Version Testée :**
@@ -15,7 +11,7 @@ Cette couche concerne l’interaction avec les applications web et les services,
 Le script automatisé analysera ce fichier pour :
 - Lister les outils disponibles (sections marquées par **"### Outil:"**),
 - Afficher, pour chaque outil, les attaques possibles (sections marquées par **"#### Attaque:"**),
-- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"** avec une section "Détails :").
+- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"**).
 
 Vous pourrez enrichir ce fichier ultérieurement sans modifier le script.
 
@@ -28,8 +24,8 @@ Sqlmap est un outil d’automatisation pour détecter et exploiter des vulnérab
 #### Attaque: Détection d'injection SQL
 *Détails de l'attaque :*  
 Détecter automatiquement les vulnérabilités d'injection SQL sur une URL cible.
-##### Commandes Clés
-**Commande: Détecter une injection SQL**
+
+###### Commande: Détecter une injection SQL
 ```bash
 sqlmap -u "http://site.com/page?id=1" --batch
 ```
@@ -40,8 +36,8 @@ Détails :
 #### Attaque: Extraction des bases de données
 *Détails de l'attaque :*  
 Extraire la liste des bases de données présentes sur le serveur vulnérable.
-##### Commandes Clés
-**Commande: Extraire les bases de données**
+
+###### Commande: Extraire les bases de données
 ```bash
 sqlmap -u "http://site.com/page?id=1" --dbs
 ```
@@ -51,8 +47,8 @@ Détails :
 #### Attaque: Dump d'une table spécifique
 *Détails de l'attaque :*  
 Extraire le contenu d'une table précise après avoir sélectionné la base de données.
-##### Commandes Clés
-**Commande: Dump d'une table spécifique**
+
+###### Commande: Dump d'une table spécifique
 ```bash
 sqlmap -u "http://site.com/page?id=1" -D nom_de_base -T nom_de_table --dump
 ```
@@ -62,8 +58,8 @@ Détails :
 #### Attaque: Bypass WAF
 *Détails de l'attaque :*  
 Utiliser des techniques de contournement pour échapper aux Web Application Firewalls.
-##### Commandes Clés
-**Commande: Bypass WAF avec tamper**
+
+###### Commande: Bypass WAF avec tamper
 ```bash
 sqlmap -u "http://site.com/page?id=1" --tamper=space2comment
 ```
@@ -79,8 +75,8 @@ Burp Suite est une plateforme intégrée pour tester la sécurité des applicati
 #### Attaque: Analyse et Scan Web
 *Détails de l'attaque :*  
 Utiliser Burp Suite pour scanner les vulnérabilités d'une application web.
-##### Commandes Clés
-**Commande: Lancer Burp Suite Community**
+
+###### Commande: Lancer Burp Suite Community
 ```bash
 java -jar burpsuite_community.jar
 ```
@@ -91,8 +87,8 @@ Détails :
 #### Attaque: Interception de requêtes HTTP
 *Détails de l'attaque :*  
 Intercepter et modifier en temps réel les requêtes HTTP pour tester la robustesse des contrôles d'accès.
-##### Commandes Clés
-**Commande: Lancer Burp avec configuration personnalisée**
+
+###### Commande: Lancer Burp avec configuration personnalisée
 ```bash
 java -jar burpsuite_community.jar --config-file=burp_config.json
 ```
@@ -108,8 +104,8 @@ Nikto est un scanner de serveurs web open source qui identifie les problèmes de
 #### Attaque: Scan de vulnérabilités sur un serveur web
 *Détails de l'attaque :*  
 Exécuter un scan complet des vulnérabilités d’un serveur web.
-##### Commandes Clés
-**Commande: Lancer un scan avec Nikto**
+
+###### Commande: Lancer un scan avec Nikto
 ```bash
 nikto -h http://site.com
 ```

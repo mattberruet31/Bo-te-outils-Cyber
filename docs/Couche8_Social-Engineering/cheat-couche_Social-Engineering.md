@@ -1,7 +1,3 @@
-**Chemin :**  
-`docs/Couche8_Social-Engineering/cheat-couche_Social-Engineering.md`
-
-```markdown
 # Couche 8 (Social Engineering) – Attaques et Outils
 
 **Version Testée :**
@@ -13,10 +9,10 @@
 Ce document recense les outils et attaques disponibles pour la couche Social Engineering du modèle OSI.  
 Cette couche s'appuie sur la manipulation psychologique et la tromperie pour obtenir des informations sensibles ou compromettre des systèmes.  
 Les outils présentés permettent de lancer des campagnes de phishing, de cloner des sites web, de générer des payloads malveillants ou de simuler des attaques d'ingénierie sociale.  
-Le script automatisé analysera ce fichier pour :
+Le script automatisé analysera ce fichier pour :
 - Lister les outils disponibles (sections marquées par **"### Outil:"**),
 - Afficher, pour chaque outil, les attaques possibles (sections marquées par **"#### Attaque:"**),
-- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"** avec une section "Détails :").
+- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"**).
 
 Vous pourrez enrichir ce fichier ultérieurement sans modifier le script.
 
@@ -24,13 +20,13 @@ Vous pourrez enrichir ce fichier ultérieurement sans modifier le script.
 
 ### Outil: Social-Engineer Toolkit (SET)
 **Description :**  
-SET est un framework complet pour réaliser des attaques d'ingénierie sociale, telles que le phishing, le spear-phishing, la création de sites clones, et la génération de payloads.
+SET est un framework complet pour réaliser des attaques d'ingénierie sociale, telles que le phishing, le spear-phishing, la création de sites clones et la génération de payloads.
 
 #### Attaque: Phishing / Credential Harvester
 *Détails de l'attaque :*  
 Cloner un site web afin de capturer les identifiants des utilisateurs lorsqu'ils se connectent.
-##### Commandes Clés
-**Commande: Lancer SET pour Credential Harvester**
+
+###### Commande: Lancer SET pour Credential Harvester
 ```bash
 setoolkit
 ```
@@ -41,8 +37,8 @@ Détails :
 #### Attaque: Envoi de mass mail de phishing
 *Détails de l'attaque :*  
 Utiliser SET pour envoyer des e-mails de phishing en masse afin de tromper les destinataires et collecter leurs informations.
-##### Commandes Clés
-**Commande: Lancer SET pour Mass Mailer Attack**
+
+###### Commande: Lancer SET pour Mass Mailer Attack
 ```bash
 setoolkit --mass-mailer
 ```
@@ -58,13 +54,13 @@ Gophish est une plateforme open source de phishing qui permet de créer et de g�
 #### Attaque: Campagne de phishing
 *Détails de l'attaque :*  
 Créer et lancer une campagne de phishing ciblée pour récolter des informations sensibles.
-##### Commandes Clés
-**Commande: Lancer Gophish (serveur intégré)**
+
+###### Commande: Lancer Gophish (serveur intégré)
 ```bash
 ./gophish
 ```
 Détails :
-- Lancez l'interface web de Gophish, configurez votre campagne, et surveillez les résultats.
+- Lancez l'interface web de Gophish, configurez votre campagne et surveillez les résultats.
 
 ---
 
@@ -75,8 +71,8 @@ King Phisher est un outil de simulation de phishing qui permet de tester la sens
 #### Attaque: Simulation de phishing avancée
 *Détails de l'attaque :*  
 Simuler une attaque de phishing pour évaluer la vulnérabilité des utilisateurs et améliorer la formation.
-##### Commandes Clés
-**Commande: Lancer King Phisher Client**
+
+###### Commande: Lancer King Phisher Client
 ```bash
 king-phisher
 ```
