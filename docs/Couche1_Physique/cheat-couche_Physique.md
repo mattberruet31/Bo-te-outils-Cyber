@@ -1,4 +1,3 @@
-# 1. docs/Couche1_Physique/cheat-couche1.md
 # Couche 1 (Physique) – HackRF
 **Version Testée : HackRF One v1.2**  
 **Attaque Principale : Brouillage électromagnétique (EM Flood)**
@@ -38,50 +37,76 @@ Ce cheat sheet présente des scénarios d’expérimentation sur la couche physi
 ```bash
 sudo apt update
 sudo apt install hackrf
-________________________________________
-Commandes Clés
-1. Scanner les fréquences
+```
+
+---
+
+## Commandes Clés
+
+### Scanner les fréquences
+```bash
 hackrf_sweep -f 2400:2500 -w 1000000 -l 32 -g 32
-Détails :
-•	-f 2400:2500 : plage de fréquences en MHz.
-•	-w 1000000 : largeur de bande (1 MHz).
-•	-l 32 et -g 32 : réglages de gain RX.
-2. Générer un signal de brouillage sur 2.4 GHz (Wi-Fi)
+```
+*Détails :*
+- `-f 2400:2500` : plage de fréquences en MHz.
+- `-w 1000000`   : largeur de bande (1 MHz).
+- `-l 32` et `-g 32` : réglages de gain RX.
+
+### Générer un signal de brouillage sur 2.4 GHz (Wi-Fi)
+```bash
 hackrf_transfer -t noise.bin -f 2400000000 -s 20000000 -x 47
-Détails :
-•	-t noise.bin : fichier binaire générant un signal bruité.
-•	-f 2400000000 : fréquence cible (2.4 GHz).
-•	-s 20000000 : taux d’échantillonnage (20 MHz).
-•	-x 47 : gain TX maximal.
-3. Enregistrer un signal
+```
+*Détails :*
+- `-t noise.bin` : fichier binaire générant un signal bruité.
+- `-f 2400000000` : fréquence cible (2.4 GHz).
+- `-s 20000000`   : taux d’échantillonnage (20 MHz).
+- `-x 47`         : gain TX maximal.
+
+### Enregistrer un signal
+```bash
 hackrf_transfer -r capture.raw -f 2400000000 -s 20000000 -l 32 -g 32
-Détails :
-•	-r capture.raw : nom du fichier de sauvegarde.
-•	-l 32 et -g 32 : gains RX.
-________________________________________
-Exemples d’Utilisation
-•	Wi-Fi Jamming : 
-1.	Générer ou récupérer un fichier noise.bin (signal bruit blanc).
-2.	Émettre sur la fréquence 2.4 GHz pour saturer le canal.
-•	Bluetooth Sniffing : 
-o	Identifier les canaux avec hackrf_sweep puis enregistrer une capture avec hackrf_transfer.
-________________________________________
-Intégration avec le Script
-•	Annotations :
+```
+*Détails :*
+- `-r capture.raw` : nom du fichier de sauvegarde.
+- `-l 32` et `-g 32` : gains RX.
+
+---
+
+## Exemples d’Utilisation
+
+### Wi-Fi Jamming
+1. Générer ou récupérer un fichier `noise.bin` (signal bruit blanc).  
+2. Émettre sur la fréquence 2.4 GHz pour saturer le canal.
+
+### Bluetooth Sniffing
+- Identifier les canaux avec `hackrf_sweep` puis enregistrer une capture avec `hackrf_transfer`.
+
+---
+
+## Intégration avec le Script
+
+*Annotations :*  
 Chaque commande est clairement identifiée et commentée pour que le script puisse : 
-o	Extraire la commande et ses paramètres.
-o	Enregistrer l’exécution et les options choisies.
-•	Rapport automatisé :
+- Extraire la commande et ses paramètres.
+- Enregistrer l’exécution et les options choisies.
+
 Le script analysera les logs pour générer un rapport détaillé (ex. : "attaque EM Flood sur 2.4 GHz").
-________________________________________
-Précautions Légales & Disclaimer
-Attention : L’utilisation de HackRF pour générer ou intercepter des signaux radio est strictement réglementée.
-Réalisez ces expérimentations uniquement dans un environnement de test contrôlé (laboratoire ou cage de Faraday) et avec les autorisations nécessaires.
-Disclaimer : Ce document est fourni à des fins éducatives uniquement. Toute utilisation malveillante est interdite.
-________________________________________
-Références & Ressources
-•	HackRF Officiel GitHub
-•	Documentation HackRF
-•	GNU Radio
+
+---
+
+## Précautions Légales & Disclaimer
+
+> **Attention :** L’utilisation de HackRF pour générer ou intercepter des signaux radio est strictement réglementée.  
+> Réalisez ces expérimentations uniquement dans un environnement de test contrôlé (laboratoire ou cage de Faraday) et avec les autorisations nécessaires.  
+> *Disclaimer : Ce document est fourni à des fins éducatives uniquement. Toute utilisation malveillante est interdite.*
+
+---
+
+## Références & Ressources
+
+- [HackRF Officiel GitHub](https://github.com/mossmann/hackrf)  
+- [Documentation HackRF](https://hackrf.readthedocs.io/en/latest/)  
+- [GNU Radio](https://www.gnuradio.org/)
+```
 
 ---
