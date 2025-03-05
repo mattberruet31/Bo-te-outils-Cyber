@@ -9,12 +9,6 @@
 Ce document recense les outils et attaques disponibles pour la couche Transport du modèle OSI.  
 La couche 4 gère le transport des données via des protocoles tels que TCP et UDP.  
 Les outils présentés permettent de mener des attaques de force brute sur divers protocoles (SSH, FTP, Telnet, RDP, etc.) ainsi que des tests d’authentification.  
-Le script automatisé analysera ce fichier pour :
-- Lister les outils disponibles (sections marquées par **"### Outil:"**),
-- Afficher, pour chaque outil, les attaques possibles (sections marquées par **"#### Attaque:"**),
-- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"**).
-
-Vous pourrez enrichir ce fichier ultérieurement sans modifier le script.
 
 ---
 

@@ -8,12 +8,6 @@
 **Description :**  
 Ce document recense les outils et attaques disponibles pour la couche Application (couches 5 à 7) du modèle OSI.  
 Cette couche concerne l’interaction avec les applications web et les services, incluant l’injection SQL, la manipulation de requêtes HTTP et la découverte de vulnérabilités dans les serveurs web.  
-Le script automatisé analysera ce fichier pour :
-- Lister les outils disponibles (sections marquées par **"### Outil:"**),
-- Afficher, pour chaque outil, les attaques possibles (sections marquées par **"#### Attaque:"**),
-- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"**).
-
-Vous pourrez enrichir ce fichier ultérieurement sans modifier le script.
 
 ---
 

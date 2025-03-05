@@ -9,12 +9,6 @@
 Ce document recense les outils et attaques disponibles pour la couche Social Engineering du modèle OSI.  
 Cette couche s'appuie sur la manipulation psychologique et la tromperie pour obtenir des informations sensibles ou compromettre des systèmes.  
 Les outils présentés permettent de lancer des campagnes de phishing, de cloner des sites web, de générer des payloads malveillants ou de simuler des attaques d'ingénierie sociale.  
-Le script automatisé analysera ce fichier pour :
-- Lister les outils disponibles (sections marquées par **"### Outil:"**),
-- Afficher, pour chaque outil, les attaques possibles (sections marquées par **"#### Attaque:"**),
-- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"**).
-
-Vous pourrez enrichir ce fichier ultérieurement sans modifier le script.
 
 ---
 

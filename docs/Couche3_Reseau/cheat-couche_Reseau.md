@@ -8,12 +8,6 @@
 **Description :**  
 Ce document recense les outils et attaques disponibles pour la couche Réseau du modèle OSI. La couche 3 est responsable du routage et de la transmission des paquets IP.  
 Les outils présentés permettent d’effectuer des attaques de type DoS, des scans de ports, du spoofing IP et la manipulation de paquets.  
-Le script automatisé analysera ce fichier pour :
-- Lister les outils disponibles (sections marquées par **"### Outil:"**),
-- Afficher, pour chaque outil, les attaques possibles (sections marquées par **"#### Attaque:"**),
-- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"**).
-
-Vous pourrez enrichir ce fichier ultérieurement sans modifier le script.
 
 ---
 

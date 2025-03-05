@@ -9,13 +9,6 @@
 **Description :**  
 Ce document recense les outils et attaques disponibles pour la couche Liaison du modèle OSI. La couche 2 gère le contrôle d’accès au média et la transmission des trames sur le réseau local.  
 Les attaques typiques incluent le spoofing ARP, les attaques MITM (Man-In-The-Middle) et l’injection de paquets.  
-Le script automatisé analysera ce fichier pour :
-- Lister les outils disponibles (sections marquées par **"### Outil:"**),
-- Afficher, pour chaque outil, les attaques possibles (sections marquées par **"#### Attaque:"**),
-- Proposer les commandes associées pour chaque attaque (commandes présentées dans des blocs de code sous **"###### Commande:"** avec une section "Détails :" ).
-
-Vous pourrez enrichir ce fichier ultérieurement sans modifier le script.
-
 ---
 
 ### Outil: Ettercap

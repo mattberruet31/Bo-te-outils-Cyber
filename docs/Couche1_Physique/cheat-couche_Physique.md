@@ -91,23 +91,3 @@ rtl_fm -f 101.1e6 -s 22050 - | aplay -r 22050 -f S16_LE
 Détails :
 - Capture sur 101.1 MHz.
 ```
-
----
-
-### À appliquer aux autres fichiers Markdown
-
-Pour chacune des autres couches (Liaison, Réseau, Transport, Application, Social Engineering), vous devez suivre exactement le même schéma :
-
-1. Le titre de la couche.
-2. Pour chaque outil, une section débutant par `### Outil: Nom de l'outil`
-3. Pour chaque attaque de cet outil, une section débutant par `#### Attaque: Nom de l'attaque`
-4. Pour chaque commande, une ligne commençant par `###### Commande: Nom de la commande`
-5. Immédiatement après, un bloc de code délimité par :
-   - Une ligne contenant exactement ````bash` (sans guillemets)
-   - Le code
-   - Une ligne contenant exactement `````
-6. Ensuite, une section qui commence par la ligne `Détails :` suivie des détails de la commande.
-
-Vérifiez qu'il n'y a aucun espace superflu avant ces marqueurs et que les lignes de début et fin de bloc de code sont exactes.
-
----
