@@ -1,23 +1,13 @@
-Voici un exemple de fichier **README.md** qui décrit le fonctionnement global de l’outil, comment l’utiliser, comment ajouter des outils/attaques/commandes et la structure du projet :
-
----
+Voici une version complète du README en Markdown, formatée pour s'afficher correctement sur GitHub. Vous pouvez copier-coller ce contenu dans votre fichier `README.md` :
 
 ```markdown
 # Pentest Toolkit
 
-Pentest Toolkit est un outil interactif en Bash conçu pour faciliter la gestion et l’exécution de commandes de tests de sécurité (pentesting) via des cheatsheets organisées en fichiers Markdown. Chaque fichier Markdown correspond à une couche du modèle OSI et recense les outils, attaques et commandes associés. L’outil permet de :
-
-- Sélectionner une **couche** (Physique, Liaison, Réseau, Transport, Application, Social Engineering).
-- Parcourir la liste des **outils** disponibles pour cette couche.
-- Choisir une **attaque** proposée pour l’outil sélectionné.
-- Exécuter une **commande** spécifique à l’attaque, le tout en générant des logs.
-- Générer un rapport complet de test de sécurité incluant les informations générales, le résumé des choix et les logs d’exécution.
+Pentest Toolkit est un outil interactif en Bash conçu pour faciliter la gestion et l'exécution de commandes de tests de sécurité (pentesting) via des cheatsheets organisées en fichiers Markdown. Chaque fichier Markdown correspond à une couche du modèle OSI et recense les outils, attaques et commandes associés.
 
 ---
 
 ## Structure du Projet
-
-Le projet est organisé de la manière suivante :
 
 ```
 .
@@ -39,52 +29,59 @@ Le projet est organisé de la manière suivante :
 └── pentest_toolkit.sh
 ```
 
-- **docs/** : contient les dossiers pour chaque couche du modèle OSI.  
-- **Cheat-sheets Markdown** : Chaque dossier (ex. Couche1_Physique) contient un fichier `cheat-couche_*.md` qui liste les outils, attaques et commandes.
-- **pentest_toolkit.sh** : Le script principal en Bash qui parcourt ces fichiers Markdown pour proposer une interface interactive.
-- **.gitignore** : Liste des fichiers/dossiers à ignorer par Git.
-- **README.md** : Ce document.
+- **docs/** contient les dossiers pour chaque couche (ex. Couche1_Physique, Couche2_Liaison, etc.).
+- Chaque dossier de couche contient un fichier Markdown (`cheat-couche_*.md`) qui définit les outils, attaques et commandes pour cette couche.
+- **pentest_toolkit.sh** est le script principal qui lit ces fichiers Markdown pour proposer une interface interactive.
+- **.gitignore** permet d'exclure certains fichiers de Git.
+- Ce README vous présente l'ensemble du projet et explique comment l'utiliser et l'enrichir.
 
 ---
 
-## Comment Fonctionne l'Outil
+## Fonctionnement de l'Outil
 
-Le script interroge d’abord le dossier `docs` pour lister les différentes couches disponibles. Pour chaque couche, le script lit le fichier Markdown correspondant et extrait :
+Le script en Bash procède comme suit :
 
-1. **Outils** :  
-   Chaque outil doit être défini dans le fichier par une ligne commençant par `### Outil: Nom de l'outil`.
+1. **Sélection de la Couche**  
+   Le script parcourt le dossier `docs` pour lister toutes les couches disponibles (ex. Couche1_Physique, Couche2_Liaison, etc.).
 
-2. **Attaques** :  
-   Pour chaque outil, les attaques sont définies par des lignes commençant par `#### Attaque: Nom de l'attaque`.
+2. **Navigation dans la Structure de la Cheat-sheet**  
+   Pour la couche sélectionnée, le script lit le fichier Markdown associé et extrait :
+   - Les **outils** (définis par les lignes débutant par `### Outil:`)
+   - Les **attaques** pour chaque outil (définies par les lignes débutant par `#### Attaque:`)
+   - Les **commandes** pour chaque attaque (définies par les lignes débutant par `###### Commande:`, suivies d'un bloc de code et d'une section `Détails :`)
 
-3. **Commandes** :  
-   Pour chaque attaque, les commandes sont indiquées par des lignes commençant par `###### Commande: Nom de la commande`, suivies immédiatement d’un bloc de code (délimité par une ligne contenant exactement ```bash et une ligne contenant exactement ```) puis d’une section `Détails :` décrivant la commande.
+3. **Exécution et Journalisation**  
+   L'utilisateur sélectionne un outil, une attaque et une commande à exécuter. Le script exécute la commande (après confirmation) et enregistre les actions dans un fichier log.
 
-L’utilisateur navigue dans l’interface interactive pour sélectionner la couche, l’outil, l’attaque, et enfin la commande à exécuter. Le script enregistre l’historique dans un fichier log et peut générer un rapport complet de test de sécurité.
+4. **Génération d'un Rapport Complet**  
+   Une option du script permet de générer un rapport de test de sécurité. Ce rapport intègre :
+   - Des informations générales (date, nom du test, outil, attaque, commande, cible, testeur)
+   - Une description du test
+   - Un résumé des choix effectués
+   - Les logs d'exécution
+   - Des observations, conclusion et recommandations
 
 ---
 
 ## Comment Ajouter ou Modifier des Contenus
 
-Pour enrichir l’outil ou adapter les tests, vous pouvez modifier ou ajouter des contenus dans les fichiers Markdown situés dans le dossier **docs** :
+### Ajout d'un nouvel outil, attaque ou commande :
 
-1. **Ajouter un nouvel outil :**  
-   - Dans le fichier Markdown de la couche concernée, ajoutez une section commençant par `### Outil: NomDeLOutil`.
-   - Ajoutez une description sous ce titre.
+- **Outil** :  
+  Dans le fichier Markdown de la couche concernée, ajoutez une section commençant par `### Outil: NomDeLOutil` suivi d'une description.
 
-2. **Ajouter une attaque pour un outil :**  
-   - Sous la section de l’outil, ajoutez une ligne commençant par `#### Attaque: NomDeLattaque`.
-   - Ajoutez un court descriptif de l’attaque.
+- **Attaque** :  
+  Sous la section de l’outil, ajoutez une ligne commençant par `#### Attaque: NomDeLattaque` suivie d'un court descriptif.
 
-3. **Ajouter une commande pour une attaque :**  
-   - Sous la section d’attaque, ajoutez une ligne commençant par `###### Commande: NomDeLaCommande`.
-   - Immédiatement après, insérez un bloc de code en utilisant :
-     - Une ligne contenant exactement ````bash`  
-     - Le code de la commande  
-     - Une ligne contenant exactement `````
-   - Ensuite, ajoutez une ligne commençant par `Détails :` suivie d’une description détaillée de la commande (ceci aide à comprendre son fonctionnement).
+- **Commande** :  
+  Sous la section d'attaque, ajoutez une ligne débutant par `###### Commande: NomDeLaCommande`, puis immédiatement un bloc de code en utilisant :
+  - Une ligne contenant exactement ````bash`  
+  - Le code à exécuter  
+  - Une ligne contenant exactement `````
+  
+  Ensuite, ajoutez une ligne commençant par `Détails :` suivie d'une description détaillée de la commande.
 
-**Exemple de section commande :**
+**Exemple :**
 
 ```markdown
 ###### Commande: Exemple d'exécution
@@ -95,64 +92,51 @@ Détails :
 - Affiche "Hello, world!" dans le terminal.
 ```
 
-Veillez à respecter exactement ce format pour garantir que le script puisse extraire correctement les informations.
+Assurez-vous que les balises sont exactes (sans espaces superflus) pour que le script puisse les détecter correctement.
 
 ---
 
-## Utilisation de l'Outil
+## Utilisation
 
-1. **Exécution du Script :**
-   - Rendez le script exécutable :
-     ```bash
-     chmod +x pentest_toolkit.sh
-     ```
-   - Lancez le script :
-     ```bash
-     ./pentest_toolkit.sh
-     ```
+1. **Rendre le script exécutable :**
 
-2. **Navigation Interne :**
-   - Sélectionnez une couche parmi celles listées.
-   - Choisissez ensuite un outil, puis une attaque, et enfin une commande à exécuter.
-   - Le script enregistrera vos choix et les actions dans un fichier log.
+   ```bash
+   chmod +x pentest_toolkit.sh
+   ```
 
-3. **Génération du Rapport :**
-   - Vous pouvez générer un rapport complet de test de sécurité qui intègre les informations générales, vos choix, les logs, vos observations, la conclusion et les recommandations.
+2. **Lancer le script :**
+
+   ```bash
+   ./pentest_toolkit.sh
+   ```
+
+3. **Naviguer dans le menu interactif :**  
+   Sélectionnez la couche, l’outil, l’attaque, et enfin la commande à exécuter. Vous pouvez également générer un rapport complet de test de sécurité.
 
 ---
 
-## Personnalisation et Extensions
+## Personnalisation
 
 - **Ajout de nouvelles couches :**  
-  Créez un nouveau dossier sous `docs` avec le nom de la nouvelle couche, et ajoutez-y un fichier Markdown suivant la même structure.
+  Créez un nouveau dossier sous `docs` (par exemple `Couche9_NouveauType`) et ajoutez-y un fichier Markdown suivant le même format.
 
-- **Intégration avec d'autres outils :**  
-  Vous pouvez adapter ou enrichir les commandes existantes, voire ajouter des nouvelles attaques et outils en respectant le format.
-
-- **Mise à jour du script :**  
-  Le script est conçu pour être modulaire et s’adapter aux modifications apportées aux fichiers Markdown sans nécessiter de modification.
-
----
-
-## Remarques
-
-- Assurez-vous que les fichiers Markdown respectent strictement la structure indiquée (pas d'espaces superflus, de retours de ligne non voulus, etc.) pour garantir une extraction correcte.
-- Ce projet est destiné à des tests en environnement contrôlé. L’utilisation de cet outil en production ou sans autorisation peut être illégale.
+- **Extensions :**  
+  Vous pouvez enrichir les fichiers Markdown ou adapter le script selon vos besoins spécifiques en matière de tests de sécurité.
 
 ---
 
 ## Licence
 
-[Précisez ici la licence applicable, par exemple MIT ou autre.]
+Ce projet est sous licence [Indiquez ici la licence, par exemple MIT].
 
 ---
 
 ## Contact
 
-Pour toute question ou contribution, n’hésitez pas à contacter [Votre Nom / Email].
+Pour toute question ou contribution, n’hésitez pas à contacter [Votre Nom] à [votre.email@example.com].
 
 ```
 
 ---
 
-Ce README.md fournit une vue d’ensemble complète du projet, explique comment utiliser l’outil, comment enrichir le contenu et décrit la structure du projet. Vous pouvez l’adapter ou le compléter selon vos besoins.
+Ce format devrait s'afficher correctement sur GitHub, avec une indentation et une mise en forme claires. N'hésitez pas à adapter ce README selon vos besoins spécifiques.
