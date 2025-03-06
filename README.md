@@ -1,3 +1,7 @@
+Voici un exemple de fichier **README.md** qui décrit le fonctionnement global de l’outil, comment l’utiliser, comment ajouter des outils/attaques/commandes et la structure du projet :
+
+---
+
 ```markdown
 # Pentest Toolkit
 
@@ -139,12 +143,16 @@ Veillez à respecter exactement ce format pour garantir que le script puisse ext
 
 ## Licence
 
-[IPI License School.]
+[Précisez ici la licence applicable, par exemple MIT ou autre.]
 
 ---
 
 ## Contact
 
-Pour toute question ou contribution, n’hésitez pas à contacter BERRUET.
+Pour toute question ou contribution, n’hésitez pas à contacter [Votre Nom / Email].
 
 ```
+
+---
+
+Ce README.md fournit une vue d’ensemble complète du projet, explique comment utiliser l’outil, comment enrichir le contenu et décrit la structure du projet. Vous pouvez l’adapter ou le compléter selon vos besoins.
