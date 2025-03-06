@@ -1,7 +1,3 @@
-Voici une version du README en Markdown, avec des sections et des blocs de code correctement indentés pour un affichage optimal sur GitHub. L’important est de veiller à ce que les blocs de code (et les listes imbriquées) soient correctement délimités et que chaque section ait la bonne syntaxe Markdown.
-
----
-
 ```markdown
 # Pentest Toolkit
 
@@ -143,16 +139,8 @@ Assurez-vous de ne pas avoir d’espaces superflus avant les marqueurs (`###`, `
 
 ## Contact
 
-Pour toute question ou contribution, n’hésitez pas à contacter **[Votre Nom / Organisation]** à **[votre.email@example.com]**.
+Pour toute question ou contribution, n’hésitez pas à contacter **[BERRUET]** à **[matthieu.berruet@campus-igs-toulouse.fr**.
 
 ```
 
 ---
-
-### Astuces pour un affichage correct sur GitHub
-
-- Les blocs de code doivent être délimités par trois backticks (```) sur une ligne vide avant et après.
-- Les listes imbriquées ou blocs ASCII (ex. l’arborescence) sont souvent mieux rendus dans un bloc de code dédié (ex. \`\`\`plaintext ou \`\`\`shell).
-- Les sections (titres) doivent être précédées et suivies d’une ligne vide pour être bien reconnus par le parser Markdown.
-
-En suivant ces principes, vous obtiendrez un README correctement indenté et lisible dans l’interface de GitHub.
